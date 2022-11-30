@@ -1,18 +1,19 @@
 <?php
 /**
- * Softnoesis
- * Copyright(C) 21/2022 Softnoesis <contact@softnoesis.com>
- * @package Softnoesis_ProductBrand
- * @copyright Copyright(C) 2015 Softnoesis (contact@softnoesis.com)
- * @author Softnoesis <contact@softnoesis.com>
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Generic.Files.LineLength
+
 /** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
 
 $_item = $block->getItem();
 $product = $_item->getProduct();
 $isVisibleProduct = $product->isVisibleInSiteVisibility();
 /** @var \Magento\Msrp\Helper\Data $helper */
-$helper = $block->helper(Magento\Msrp\Helper\Data::class);
+$helper = $this->helper(Magento\Msrp\Helper\Data::class);
 $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
 ?>
 <tbody class="cart item">
@@ -33,16 +34,9 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                 </span>
             <?php endif; ?>
             <div class="product-item-details">
-                    <?php
-                        $entity_id = $product->getId();
-                        $load = \Magento\Framework\App\ObjectManager::getInstance();
-                        $product = $load->create('Magento\Catalog\Model\Product')->load($entity_id);
-                        $manufacture = $product->getAttributeText('manufacturer');
-                    if ($manufacture != '') {?>
-                             <div class="product-brand">
-                                    <b><?php echo $manufacture;?></b>
-                            </div>
-                    <?php }?>
+                 <div class="product-brand">
+                    <b><?php echo $_item->getProduct()->getAttributeText('manufacturer');?></b>
+                </div>
                 <strong class="product-item-name">
                     <?php if ($block->hasProductUrl()): ?>
                         <a href="<?= $block->escapeUrl($block->getProductUrl()) ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>
